@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS AI — Autonomous Enterprise Operations Agent</title>
+    <meta name="description" content="NEXUS AI is an autonomous enterprise operations agent that eliminates friction for managers and entrepreneurs through intelligent automation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- App Container -->
+    <div id="app">
+        <!-- Top Navigation -->
+        <nav id="top-nav">
+            <div class="nav-left">
+                <div class="logo-mark">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/>
+                        <path d="M16 8L22 11.5V18.5L16 22L10 18.5V11.5L16 8Z" fill="url(#logoGrad)" opacity="0.6"/>
+                        <circle cx="16" cy="15" r="3" fill="url(#logoGrad)"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="4" y1="2" x2="28" y2="30">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">NEXUS<span class="logo-ai">AI</span></span>
+                <span class="nav-badge">Enterprise Agent v2.0</span>
+            </div>
+            <div class="nav-center">
+                <button class="nav-tab active" data-view="command-center" id="nav-command">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m-7-7h6m6 0h6"/></svg>
+                    Command Center
+                </button>
+                <button class="nav-tab" data-view="workflow" id="nav-workflow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                    Workflow Engine
+                </button>
+                <button class="nav-tab" data-view="dashboard" id="nav-dashboard">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Dashboard
+                </button>
+            </div>
+            <div class="nav-right">
+                <div class="agent-status" id="agent-status">
+                    <span class="status-dot idle"></span>
+                    <span class="status-text">Idle</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ===== VIEW: COMMAND CENTER ===== -->
+        <section id="view-command-center" class="view active">
+            <div class="command-layout">
+                <!-- Left: Input Panel -->
+                <div class="panel input-panel">
+                    <div class="panel-header">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                            Mission Brief
+                        </h2>
+                        <div class="task-type-selector">
+                            <button class="type-btn active" data-type="analysis" id="btn-type-analysis">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                Analysis
+                            </button>
+                            <button class="type-btn" data-type="communication" id="btn-type-communication">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Communication
+                            </button>
+                            <button class="type-btn" data-type="decision" id="btn-type-decision">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                Decision
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-area">
+                            <textarea id="mission-input" placeholder="Paste your business document, meeting notes, email thread, or describe your business goal here...&#10;&#10;Examples:&#10;• &quot;Analyze Q3 sales report and identify underperforming regions&quot;&#10;• &quot;Draft a stakeholder update email about project delays&quot;&#10;• &quot;Should we expand to the EU market or focus on APAC?&quot;" rows="10"></textarea>
+                            <div class="input-toolbar">
+                                <div class="toolbar-left">
+                                    <button class="tool-btn" id="btn-upload" title="Upload Document">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        Upload
+                                    </button>
+                                    <input type="file" id="file-upload" hidden accept=".txt,.csv,.json,.md,.pdf">
+                                    <button class="tool-btn" id="btn-sample" title="Load Sample Data">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                        Sample Data
+                                    </button>
+                                </div>
+                                <div class="char-count" id="char-count">0 chars</div>
+                            </div>
+                        </div>
+                        <button class="execute-btn" id="btn-execute">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>Execute Agent</span>
+                            <div class="btn-shimmer"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Output Panel -->
+                <div class="panel output-panel">
+                    <div class="panel-header">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H5a2 2 0 01-2-2V5a2 2 0 012-2h4m6 14h4a2 2 0 002-2V5a2 2 0 00-2-2h-4m-6 9l3 3 3-3m-3-9v12"/></svg>
+                            Agent Output
+                        </h2>
+                        <div class="output-actions" id="output-actions" style="display:none;">
+                            <button class="action-btn" id="btn-copy" title="Copy Output">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                            <button class="action-btn" id="btn-download" title="Download Report">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="output-area" class="output-area">
+                            <div class="empty-state">
+                                <div class="empty-icon">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                </div>
+                                <h3>Ready for Mission</h3>
+                                <p>Paste your business data and hit Execute.<br>The agent will autonomously analyze and deliver structured output.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VIEW: WORKFLOW ENGINE ===== -->
+        <section id="view-workflow" class="view">
+            <div class="workflow-layout">
+                <!-- Workflow Input -->
+                <div class="panel workflow-input-panel">
+                    <div class="panel-header">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            Autonomous Workflow
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="goal-input-group">
+                            <label>Business Goal</label>
+                            <textarea id="workflow-goal" placeholder="Enter a high-level business goal...&#10;&#10;Example: &quot;Research competitor pricing in the SaaS market, identify gaps in our offering, draft an executive brief with 3 strategic recommendations, and create action items for the product team.&quot;" rows="5"></textarea>
+                        </div>
+                        <div class="tools-grid">
+                            <h3>Available Tools</h3>
+                            <div class="tool-cards">
+                                <div class="tool-card" data-tool="search_web">
+                                    <div class="tool-icon">🔍</div>
+                                    <span>search_web</span>
+                                </div>
+                                <div class="tool-card" data-tool="read_file">
+                                    <div class="tool-icon">📄</div>
+                                    <span>read_file</span>
+                                </div>
+                                <div class="tool-card" data-tool="send_email">
+                                    <div class="tool-icon">✉️</div>
+                                    <span>send_email</span>
+                                </div>
+                                <div class="tool-card" data-tool="create_task">
+                                    <div class="tool-icon">📋</div>
+                                    <span>create_task</span>
+                                </div>
+                                <div class="tool-card" data-tool="query_database">
+                                    <div class="tool-icon">🗄️</div>
+                                    <span>query_database</span>
+                                </div>
+                                <div class="tool-card" data-tool="summarize">
+                                    <div class="tool-icon">📝</div>
+                                    <span>summarize</span>
+                                </div>
+                                <div class="tool-card" data-tool="write_report">
+                                    <div class="tool-icon">📊</div>
+                                    <span>write_report</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="execute-btn" id="btn-run-workflow">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            <span>Launch Workflow</span>
+                            <div class="btn-shimmer"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Workflow Execution Log -->
+                <div class="panel workflow-log-panel">
+                    <div class="panel-header">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                            Execution Log
+                        </h2>
+                        <div class="progress-tracker" id="progress-tracker" style="display:none;">
+                            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                            <span class="progress-text" id="progress-text">0 / 0 steps</span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="execution-log" class="execution-log">
+                            <div class="empty-state">
+                                <div class="empty-icon">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                    </svg>
+                                </div>
+                                <h3>No Workflow Running</h3>
+                                <p>Define a business goal and launch the autonomous workflow engine.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VIEW: DASHBOARD ===== -->
+        <section id="view-dashboard" class="view">
+            <div class="dashboard-layout">
+                <!-- KPI Cards Row -->
+                <div class="kpi-row" id="kpi-row">
+                    <div class="kpi-card" id="kpi-tasks">
+                        <div class="kpi-icon" style="--kpi-color: #6366f1;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-value" id="kpi-tasks-val">0</span>
+                            <span class="kpi-label">Tasks Completed</span>
+                        </div>
+                        <div class="kpi-trend up">+0%</div>
+                    </div>
+                    <div class="kpi-card" id="kpi-risks">
+                        <div class="kpi-icon" style="--kpi-color: #f43f5e;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-value" id="kpi-risks-val">0</span>
+                            <span class="kpi-label">Risks Identified</span>
+                        </div>
+                        <div class="kpi-trend neutral">—</div>
+                    </div>
+                    <div class="kpi-card" id="kpi-time">
+                        <div class="kpi-icon" style="--kpi-color: #06b6d4;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-value" id="kpi-time-val">0<small>min</small></span>
+                            <span class="kpi-label">Time Saved</span>
+                        </div>
+                        <div class="kpi-trend up">+0%</div>
+                    </div>
+                    <div class="kpi-card" id="kpi-decisions">
+                        <div class="kpi-icon" style="--kpi-color: #10b981;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                        </div>
+                        <div class="kpi-data">
+                            <span class="kpi-value" id="kpi-decisions-val">0</span>
+                            <span class="kpi-label">Decisions Aided</span>
+                        </div>
+                        <div class="kpi-trend up">+0%</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Action Items -->
+                    <div class="panel dash-panel action-items-panel">
+                        <div class="panel-header">
+                            <h2>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                Action Items
+                            </h2>
+                        </div>
+                        <div class="panel-body">
+                            <div id="action-items-list" class="action-items-list">
+                                <div class="empty-state-small">
+                                    <p>No action items yet. Run an analysis to generate items.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Matrix -->
+                    <div class="panel dash-panel risk-matrix-panel">
+                        <div class="panel-header">
+                            <h2>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                Risk Assessment
+                            </h2>
+                        </div>
+                        <div class="panel-body">
+                            <div id="risk-matrix" class="risk-matrix">
+                                <div class="empty-state-small">
+                                    <p>No risks identified yet. Run an analysis to detect risks.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Execution History -->
+                    <div class="panel dash-panel history-panel">
+                        <div class="panel-header">
+                            <h2>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Execution History
+                            </h2>
+                        </div>
+                        <div class="panel-body">
+                            <div id="history-list" class="history-list">
+                                <div class="empty-state-small">
+                                    <p>No executions yet. Complete a task to see history.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="engine.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
