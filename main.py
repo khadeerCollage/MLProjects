@@ -36,7 +36,7 @@ async def analyze_text(req: AnalysisRequest):
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured on server.")
     
     try:
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         
         if req.type == "analysis":
             prompt = f"""
@@ -120,7 +120,7 @@ async def run_workflow(req: WorkflowRequest):
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured on server.")
     
     try:
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         prompt = f"""
         You are an autonomous workflow agent. The user has given you a high-level business goal.
         You must break this goal down into 4-6 logical execution steps using the available tools:
